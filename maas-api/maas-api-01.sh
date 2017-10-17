@@ -1,4 +1,4 @@
-export  count=$( ps -aef|grep platform  |head -1|awk '{print$2}' -c )
+export  count=$( ps -aef|grep platform  -c)
 
 echo "value:  $count "
 
