@@ -1,6 +1,6 @@
-set  count = " ps -aef|grep platform  |head -1|awk '{print$2}' -c "
+export  count = " ps -aef|grep platform  |head -1|awk '{print$2}' -c "
 
-echo $count
+echo "value:  $count "
 
 kill -9 $( ps -aef|grep platform  |head -1|awk '{print$2}' )  
 
