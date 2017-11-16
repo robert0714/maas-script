@@ -1,3 +1,10 @@
+export count_tmp=$(/sbin/lsof -i:8080 |grep java -c )
+
+if [[ $count_tmp > 1 ]]; then
+ kill -9 $(/sbin/lsof -i:8080 |grep java |awk '{print$2}' )
+fi
+
+
 export  count=$( ps -aef|grep maas   -c)
 
 echo "value:  $count "
