@@ -1,1 +1,2 @@
- sh /home/weblogic/Documents/programs/Jmeter/apache-jmeter-3.2/bin/jmeter.sh  -n -t maas_auth.jmx -l result.jtl -j result.csv
+sh /home/weblogic/Documents/programs/Jmeter/apache-jmeter-3.2/bin/jmeter.sh  -n -t maas_auth.jmx -l result.jtl -j result.csv
+jmeter_certifacate/ restrict dns
