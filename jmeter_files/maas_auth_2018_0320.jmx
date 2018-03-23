@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="3.2" jmeter="3.3 r1808647">
+<jmeterTestPlan version="1.2" properties="4.0" jmeter="4.0 r1823414">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -24,7 +24,7 @@
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">20</stringProp>
         <longProp name="ThreadGroup.start_time">1508991049000</longProp>
         <longProp name="ThreadGroup.end_time">1508991049000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -52,7 +52,7 @@
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">/Users/leerobert/Desktop/maas/maas-script/jmeter_files/parameters/data-cht-test.csv</stringProp>
+          <stringProp name="filename">/sharedData/robertData/robert0714/Desktop/tmp/maas-script/jmeter_files/parameters/data-cht-test.csv</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
@@ -236,7 +236,7 @@
     { &#xd;
       &quot;ticketId&quot; : 2124 , &#xd;
       &quot;count&quot; : 1 , &#xd;
-      &quot;rideDate&quot; : &quot;2018-03-22&quot; ,&#xd;
+      &quot;rideDate&quot; : &quot;2018-03-24&quot; ,&#xd;
       &quot;startStop&quot;:&quot;宜蘭轉運站&quot;,&#xd;
       &quot;endStop&quot;:&quot;板橋客運站&quot;&#xd;
     }&#xd;
@@ -392,9 +392,5 @@ log.info (&quot;token is &quot; + token);
         <hashTree/>
       </hashTree>
     </hashTree>
-    <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="WorkBench" enabled="true">
-      <boolProp name="WorkBench.save">true</boolProp>
-    </WorkBench>
-    <hashTree/>
   </hashTree>
 </jmeterTestPlan>
