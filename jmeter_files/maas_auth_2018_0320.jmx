@@ -23,7 +23,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">20</stringProp>
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1508991049000</longProp>
         <longProp name="ThreadGroup.end_time">1508991049000</longProp>
@@ -58,7 +58,7 @@
           <boolProp name="recycle">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">ip,port</stringProp>
+          <stringProp name="variableNames">ip,port,protocol</stringProp>
         </CSVDataSet>
         <hashTree/>
         <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
@@ -74,7 +74,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${ip}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path"></stringProp>
           <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
@@ -236,7 +236,7 @@
     { &#xd;
       &quot;ticketId&quot; : 2124 , &#xd;
       &quot;count&quot; : 1 , &#xd;
-      &quot;rideDate&quot; : &quot;2018-03-24&quot; ,&#xd;
+      &quot;rideDate&quot; : &quot;2018-03-27&quot; ,&#xd;
       &quot;startStop&quot;:&quot;宜蘭轉運站&quot;,&#xd;
       &quot;endStop&quot;:&quot;板橋客運站&quot;&#xd;
     }&#xd;
