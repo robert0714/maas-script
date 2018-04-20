@@ -155,7 +155,14 @@
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree/>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">number</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.number</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="交通票卷-個人訂單查詢" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
@@ -174,7 +181,22 @@
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree/>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">verify_number</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$..number</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+            <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">verify_id</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$..id</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+            <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
@@ -261,11 +283,24 @@ String token =  vars.get(&quot;token&quot;);
 log.info (&quot;The example answer is &quot; + jsonString);	
 log.info (&quot;token is &quot; + token);	
 
-	if (	token == null){
+if (	token == null){
 		AssertionResult.setFailureMessage(&quot;The User Id is wrong&quot;);
 	    	AssertionResult.setFailure(true); 
-	}
- </stringProp>
+}
+String number =  vars.get(&quot;number&quot;);
+String verify_number =  vars.get(&quot;verify_number&quot;);
+String verify_number_1 =  vars.get(&quot;verify_number_1&quot;);
+String verify_id_1 =  vars.get(&quot;verify_id_1&quot;);
+String verify_number_2 =  vars.get(&quot;verify_number_2&quot;);
+String verify_id_2 =  vars.get(&quot;verify_id_2&quot;);
+
+
+log.info (&quot;The number is &quot; + number);	
+log.info (&quot;verify_number is &quot; + verify_number);	
+log.info (&quot;verify_number_1 is &quot; + verify_number_1);		
+log.info (&quot;verify_number_2 is &quot; + verify_number_2);	
+log.info (&quot;verify_id_1 is &quot; + verify_id_1);		
+log.info (&quot;verify_id_2 is &quot; + verify_id_2);	</stringProp>
         </JSR223Assertion>
         <hashTree/>
         <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="true">
