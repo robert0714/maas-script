@@ -21,7 +21,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">20</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -284,8 +284,8 @@ log.info (&quot;The example answer is &quot; + jsonString);
 log.info (&quot;token is &quot; + token);	
 
 if (	token == null){
-		AssertionResult.setFailureMessage(&quot;The User Id is wrong&quot;);
-	    	AssertionResult.setFailure(true); 
+	AssertionResult.setFailureMessage(&quot;The User Id is wrong&quot;);
+	AssertionResult.setFailure(true); 
 }
 String number =  vars.get(&quot;number&quot;);
 String verify_number_1 =  vars.get(&quot;verify_number_1&quot;);
@@ -297,8 +297,8 @@ log.info (&quot;verify_number_1 is &quot; + verify_number_1);
 log.info (&quot;verify_id_1 is &quot; + verify_id_1);	
 
 if ( verify_number_1 != null  &amp;&amp; number != verify_number_1){
-         AssertionResult.setFailureMessage(&quot;The number does not equal with verify_number_1&quot;);
-	    	AssertionResult.setFailure(true); 
+     AssertionResult.setFailureMessage(&quot;The number does not equal with verify_number_1&quot;+ number +&quot; , &quot;+ verify_number_1);        
+	AssertionResult.setFailure(true); 
 }else if(verify_number_1 != null  &amp;&amp; number == verify_number_1){
 	log.info (&quot;***********equal!!! &quot;  );
 }</stringProp>
