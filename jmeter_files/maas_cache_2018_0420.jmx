@@ -184,14 +184,14 @@
         <hashTree>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">verify_number</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$..number</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.content[0].order.number</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
             <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
           </JSONPostProcessor>
           <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">verify_id</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$..id</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.content[0].id</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
             <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
           </JSONPostProcessor>
@@ -288,19 +288,20 @@ if (	token == null){
 	    	AssertionResult.setFailure(true); 
 }
 String number =  vars.get(&quot;number&quot;);
-String verify_number =  vars.get(&quot;verify_number&quot;);
 String verify_number_1 =  vars.get(&quot;verify_number_1&quot;);
 String verify_id_1 =  vars.get(&quot;verify_id_1&quot;);
-String verify_number_2 =  vars.get(&quot;verify_number_2&quot;);
-String verify_id_2 =  vars.get(&quot;verify_id_2&quot;);
 
 
-log.info (&quot;The number is &quot; + number);	
-log.info (&quot;verify_number is &quot; + verify_number);	
-log.info (&quot;verify_number_1 is &quot; + verify_number_1);		
-log.info (&quot;verify_number_2 is &quot; + verify_number_2);	
-log.info (&quot;verify_id_1 is &quot; + verify_id_1);		
-log.info (&quot;verify_id_2 is &quot; + verify_id_2);	</stringProp>
+log.info (&quot;number is &quot; + number);
+log.info (&quot;verify_number_1 is &quot; + verify_number_1);
+log.info (&quot;verify_id_1 is &quot; + verify_id_1);	
+
+if ( verify_number_1 != null  &amp;&amp; number != verify_number_1){
+         AssertionResult.setFailureMessage(&quot;The number does not equal with verify_number_1&quot;);
+	    	AssertionResult.setFailure(true); 
+}else if(verify_number_1 != null  &amp;&amp; number == verify_number_1){
+	log.info (&quot;***********equal!!! &quot;  );
+}</stringProp>
         </JSR223Assertion>
         <hashTree/>
         <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="true">
