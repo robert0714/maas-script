@@ -1,7 +1,8 @@
 production:
  
  os cli
-  rm -rf   /var/log/mysqld.log
+        systemctl stop mysqld
+        rm -rf   /var/log/mysqld.log
 	rm -rf /var/lib/mysql/*	
 	systemctl start mysqld
 	systemctl status mysqld
