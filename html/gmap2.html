@@ -83,7 +83,15 @@ function initialize() {
         popup.setContent(popupContent);
         popup.open(map, marker);
         $("#SearchLatLng").html("【您輸入的地址位置】：" + result.formatted_address);
-
+        console.log(result.address_components[0]);
+        console.log(result.address_components[1]);
+        console.log(result.address_components[2]);
+        console.log(result.address_components[3]);
+        console.log(result.address_components[4]);
+        console.log(result.address_components[5]);
+        console.log(result.address_components[6]);
+        console.log(result);
+        console.log(result.types);
     }
 }
 </script>
