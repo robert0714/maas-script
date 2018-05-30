@@ -1,0 +1,36 @@
+production:
+ 
+ os cli
+  rm -rf   /var/log/mysqld.log
+	rm -rf /var/lib/mysql/*	
+	systemctl start mysqld
+	systemctl status mysqld
+	
+	sudo grep 'temporary password' /var/log/mysqld.log
+
+
+db cli
+
+SELECT * FROM performance_schema.replication_group_members;
+SET  GLOBAL  validate_password_policy=LOW;
+SET  GLOBAL  validate_password_special_char_count=0;
+SET  GLOBAL  validate_password_number_count =0;
+SET  GLOBAL  validate_password_mixed_case_count =0;
+SET  GLOBAL  validate_password_length =6;    systemctl stop mysqld
+	
+
+
+DROP DATABASE ec;
+CREATE DATABASE ec CHARACTER SET utf8 COLLATE utf8_general_ci;
+create user "ecuser"@"%" identified by "qazwsx";
+create user "chain"@"%" identified by "qazwsx";
+grant all on  *.* to   "ecuser"@"%" ;
+grant all on  *.* to   "chain"@"%" ;
+UPDATE mysql.user SET Super_Priv='Y' WHERE user='ecuser';
+UPDATE mysql.user SET Super_Priv='Y' WHERE user='chain';
+
+CREATE USER 'cactiuser'@'172.21.4.169' IDENTIFIED BY 'cactipasswd';
+CREATE USER 'cactiuser'@'172.21.4.168' IDENTIFIED BY 'cactipasswd';
+CREATE USER 'cactiuser'@'172.21.4.165' IDENTIFIED BY 'cactipasswd';
+UPDATE mysql.user SET Super_Priv='Y' WHERE user='cactiuser';
+FLUSH PRIVILEGES;
