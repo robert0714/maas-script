@@ -21,10 +21,10 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">20</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">0</stringProp>
         <longProp name="ThreadGroup.start_time">1508991049000</longProp>
         <longProp name="ThreadGroup.end_time">1508991049000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -52,7 +52,7 @@
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">/sharedData/robertData/robert0714/Desktop/tmp/maas-script/jmeter_files/parameters/local.csv</stringProp>
+          <stringProp name="filename">/sharedData/robertData/robert0714/Desktop/tmp/maas-script/jmeter_files/parameters/data-cht-dev.csv</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
@@ -90,7 +90,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;unionid&quot;:&quot;asdjflaksjdfkla1#asdf&quot;,&#xd;
+  &quot;unionid&quot;:&quot;108380535050078629703&quot;,&#xd;
   &quot;thirdPartyType&quot;:&quot;google&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -119,7 +119,7 @@
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="訂購 交通票券" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="個人資訊-查詢" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -129,9 +129,9 @@
   &quot;note&quot; : &quot;備註...&quot;,&#xd;
   &quot;items&quot;: [&#xd;
     { &#xd;
-      &quot;ticketId&quot; : 2124 , &#xd;
+      &quot;ticketId&quot; : 2138 , &#xd;
       &quot;count&quot; : 1 , &#xd;
-      &quot;rideDate&quot; : &quot;2018-05-07&quot; ,&#xd;
+      &quot;rideDate&quot; : &quot;2018-10-02&quot; ,&#xd;
       &quot;startStop&quot;:&quot;宜蘭轉運站&quot;,&#xd;
       &quot;endStop&quot;:&quot;板橋客運站&quot;&#xd;
     }&#xd;
@@ -145,37 +145,7 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/purchase/traffic-tickets</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">number</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.number</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-        </hashTree>
-        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
-          <stringProp name="ConstantTimer.delay">0</stringProp>
-        </ConstantTimer>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="交通票卷-個人訂單查詢" enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/users/201712280001/tickets</stringProp>
+          <stringProp name="HTTPSampler.path">/api/users</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -187,20 +157,111 @@
         </HTTPSamplerProxy>
         <hashTree>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">verify_number</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.content[0].order.number</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
-            <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">verify_id</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.content[0].id</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
-            <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            <stringProp name="JSONPostProcessor.referenceNames">plateNumber</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.plateNumber</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="個人資訊-編輯" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;name&quot;: &quot;Sam Fan&quot;,&#xd;
+  &quot;email&quot;: &quot;wonderful.idv.tw@gmail.com&quot;,&#xd;
+  &quot;mobile&quot;: &quot;0935314195&quot;,&#xd;
+  &quot;birthday&quot;:&quot;1988-10-10&quot;,&#xd;
+  &quot;education&quot;:&quot;university&quot;,&#xd;
+  &quot;gender&quot;:&quot;male&quot;,&#xd;
+  &quot;plateNumber&quot;: &quot;${randomNumber}&quot;,&#xd;
+  &quot;address&quot;:{&#xd;
+    &quot;cityArea&quot;:&quot;106&quot;,&#xd;
+    &quot;postalCode&quot;:&quot;2222&quot;,&#xd;
+    &quot;street&quot;:&quot;test222&quot;&#xd;
+  },&#xd;
+  &quot;deviceId&quot;: &quot;c3gNtJiqnTc:APA91bFRN-wXDb_YOz2yioFre48RM0wqxrivwBVgN2S6wZGh0OL9uvEtuGiKbrv_OdKPCEO4yTZtlS-MV1OrsQZdviTxrFkxvjhLP9g9neykAGNViKj2nO8Pss-QVKFXfKRzPAxdqzCHY_AdpbB7QhCzCdCYWLLy7Q&quot;,&#xd;
+  &quot;youngChild&quot;:&quot;no&quot;,&#xd;
+  &quot;education&quot;:&quot;university&quot;,&#xd;
+  &quot;monthlyIncome&quot;:&quot;level1&quot;  &#xd;
+  &#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/users</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">randomNumber</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.plateNumber</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="個人資訊-查詢" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;note&quot; : &quot;備註...&quot;,&#xd;
+  &quot;items&quot;: [&#xd;
+    { &#xd;
+      &quot;ticketId&quot; : 2138 , &#xd;
+      &quot;count&quot; : 1 , &#xd;
+      &quot;rideDate&quot; : &quot;2018-10-02&quot; ,&#xd;
+      &quot;startStop&quot;:&quot;宜蘭轉運站&quot;,&#xd;
+      &quot;endStop&quot;:&quot;板橋客運站&quot;&#xd;
+    }&#xd;
+  ] &#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/users</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">plateNumber</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.plateNumber</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+          <stringProp name="ConstantTimer.delay">0</stringProp>
+        </ConstantTimer>
+        <hashTree/>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
@@ -280,33 +341,28 @@
           <stringProp name="parameters"></stringProp>
           <stringProp name="filename"></stringProp>
           <stringProp name="cacheKey">true</stringProp>
-          <stringProp name="script">String jsonString =  vars.get(&quot;userId&quot;);
-String id =  vars.get(&quot;id&quot;);
-String token =  vars.get(&quot;token&quot;);
+          <stringProp name="script">String token =  vars.get(&quot;token&quot;);
 
-log.info (&quot;The example answer is &quot; + jsonString);	
 log.info (&quot;token is &quot; + token);	
+String name = sampler.getName();
+log.info (&quot;name is &quot; + name);	
 
 if (	token == null){
 	AssertionResult.setFailureMessage(&quot;The User Id is wrong&quot;);
 	AssertionResult.setFailure(true); 
 }
-String number =  vars.get(&quot;number&quot;);
-String verify_number_1 =  vars.get(&quot;verify_number_1&quot;);
-String verify_id_1 =  vars.get(&quot;verify_id_1&quot;);
+Random random = new Random(); 
+
+String randomNumber = &quot;test&quot; + random.nextInt(100 ) ;
+
+log.info (&quot;randomNumber is &quot; +randomNumber );
+
+String plateNumber =  vars.get(&quot;plateNumber&quot;); 
 
 
-log.info (&quot;number is &quot; + number);
-log.info (&quot;verify_number_1 is &quot; + verify_number_1);
-log.info (&quot;verify_id_1 is &quot; + verify_id_1);	
-String name = sampler.getName();
+log.info (&quot;plateNumber is &quot; + plateNumber); 
 
-if ( verify_number_1 != null  &amp;&amp; number != verify_number_1 &amp;&amp; name != &apos;訂購 交通票券&apos; &amp;&amp; &apos;auth-mobile&apos; != name  ){
-     AssertionResult.setFailureMessage(&quot;The number does not equal with verify_number_1&quot;+ number +&quot; , &quot;+ verify_number_1);        
-	AssertionResult.setFailure(true); 
-}else if(verify_number_1 != null  &amp;&amp; number == verify_number_1){
-	log.info (&quot;***********equal!!! &quot;  );
-}</stringProp>
+ </stringProp>
         </JSR223Assertion>
         <hashTree/>
         <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="true">
