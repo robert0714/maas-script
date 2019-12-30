@@ -1,0 +1,152 @@
+import java.text.SimpleDateFormat;     
+
+node('master'){                        
+        stage ('git pull scm'){
+                                 checkout([$class: 'GitSCM', branches: [[name: '*/develop' ]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'daa209ac-11a7-469d-9812-bed84484b135', url: 'http://172.21.11.63:9000/chain/maas-backend.git']]])
+        }
+        
+        stage('mvn compile'){  
+                                  sh 'mvn clean install -D env=production -P production -Dmaven.test.skip=true '
+        }
+                             
+        stage('import db data '){
+                try {
+                              //       importData("maas/platform/pom.xml","MaasImportS02DefaultAccount") ;
+                              //       importData("develop-service-maas/pom.xml","TranslateInviteCode") ;
+                              //       importData("maas/platform/pom.xml","MaasImportS01AdminFunction") ;
+                            //         importData("maas/platform/pom.xml","MigrateUserInviteCode") ;
+                              //     importData("maas/platform/pom.xml","MaasAccountMigrateToSha256") ; 
+                              //     importData("maas/platform/pom.xml","MaasImportS*") ;  
+                                // importData("maas/platform/pom.xml","MaasMockDataS*") ;
+                                //  importData("maas/open-data-etl/pom.xml  -P importData ","POI*") ; 
+                                //  sh " mvn -f maas/platform-admin/pom.xml    clean  package  -D env=production -P production "
+                }catch(all){
+                                    
+                }
+           }
+                          
+                            
+                           deployMaasApi("172.21.11.46","8080"); 
+                           deployMaasApi("172.21.11.47","8080"); 
+                           deployMaasApi("172.21.11.48","8080"); 
+                           deployMaasApi("172.21.11.49","8080");  
+                           
+            stage('deploy admin'){
+                deployMaasAdminWar("172.21.11.61");
+                deployMaasAdminWar("172.21.11.62");
+            }
+            stage('check service is alive'){
+                
+            }
+    } 
+
+def importData(String pomPath,String param){
+    try {
+         sh  "mvn -f   " + pomPath + " test  -Dspring.profiles.active=chain   -Dtest="+ param +"  -Dmaven.test.skip=false  -Dspring.datasource.url=jdbc:mysql://172.21.12.150:6446/ec?characterEncoding=utf8&autoReconnect=true&useSSL=false  -Dspring.data.mongodb.uri=mongodb://172.21.12.135:27017/ec     -Ddevelop.service.mail.smtp.username=  -Ddevelop.service.mail.smtp.password=  -Ddevelop.service.mail.smtp.host=msa.hinet.net  -Ddevelop.service.mail.smtp.port=25 -Ddevelop.service.mail.smtp.fromer=maas@msa.hinet.net   -Ddevelop.service.mail.smtp.starttls=false   -Ddevelop.service.mail.smtp.auth=false ";
+     }catch(all){}
+   
+	return ;
+} 
+def deployMaasApi(String ip){
+   stage ('deploying..'+ip){
+        try {
+           sh "ssh    "+ ip +"  curl -X POST  http://localhost:8080/api/manage/shutdown  |jq '.'";
+        }catch(all){}
+        echo 'Waiting 2 seconds  '
+        sleep 2 // seconds
+    
+        sh "ssh  "+ ip +"  rm -rf  ~/maas*.jar   ";
+        sh "scp -r  maas/platform-napi/target/*.jar   "+ ip +":~/   ";
+     }
+    stage ('inspection'+ip){
+       build 'maas-api-exec-'+ip;
+    }
+}  
+def deployMaasApi(String ip ,String port ){
+  stage ("deploying-${ip}"){
+    try {
+      sh   "ssh   ${ip}  curl -X POST  http://localhost:${port}/api/manage/shutdown  |jq '.'";
+    }catch(all){}
+
+    echo 'Waiting 10 seconds  '
+
+    sleep 10// seconds
+
+    sh "ssh  ${ip}  rm -rf  ~/maas*.jar   ";
+    sh "scp -r  maas/platform-napi/target/*.jar    ${ip}:~/   ";
+    sh "ssh  ${ip}  rm -rf  ~/maas*sources.jar   ";
+  }
+  stage ("start-${ip}"){  
+	node("${ip}") { 
+        build "maas-api-exec-${ip}" 
+     } 
+  }
+}  
+def deployMaasAdmin(String ip){
+    sh "ssh   "+ ip +"  rm -rf  ~/apache-tomcat-7.0.82/webapps/*.war   ";
+    sh "scp -r  maas/platform-admin/target/*.war  "+ ip +":~/apache-tomcat-7.0.82/webapps/   ";
+	return ;
+}  
+def deployMaasAdminWar(String ip){
+    stage ('shutdown'+ip){
+       try {
+           sh "ssh    "+ ip +"  curl -X POST  http://localhost:8080/platform-admin/manage/shutdown  |jq '.'";
+       }catch(all){}
+    } 
+    
+    stage ('replace war in '+ip){  
+      echo 'Waiting 2 seconds  '
+      sleep 2 // seconds
+    
+      sh "ssh  "+ ip +"  rm -rf  ~/*.war   ";
+      sh "scp -r  maas/platform-admin/target/*.war    "+ ip +":~/   ";
+    
+      sh "ssh  "+ ip +"  chmod +x  ~/*.war   ";
+      
+    }
+    stage ('start'+ip){ 
+	    node("${ip}") { 
+       
+            sh "echo hello2"
+            sh "/sbin/ifconfig  -a"
+            sh "ls  -la"
+            sh "ls  ~/ -la"
+            build "maas-api-exec-${ip}" 
+            sh " ps -aef|grep  maas"
+         } 
+       
+    }
+} 
+
+
+def deployMaasApiByDocker(String ip){
+    node("maas-api-exec-172.21.11."+ip){
+                   def dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                   def date = new Date();
+                   def today = dateFormat.format(date);
+                
+                 try{
+                   sh " docker rm -f platform-napi" ;
+                 }catch(any){
+                     echo "failure to stop running container";
+                 }
+                 try{
+                   sh " docker rmi  172.21.11.63:5000/robert0714/platform-napi:${today}  " ;
+                 }catch(any){
+                     echo "failure to remove container image";
+                 }
+                 try{
+                   sh " docker pull 172.21.11.63:5000/robert0714/platform-napi:${today}  " ;
+                 }catch(any){
+                     echo "failure to remove container image";
+                 }
+                  sh "docker run -d   -p 8080:8080    \
+                    -e spring.datasource.url=jdbc:mysql://172.21.12.131:3306/ec?characterEncoding=utf8  \
+                    -e spring.data.mongodb.host=172.21.12.135  \
+                    -e http.cors.enabled=true  \
+                    -e http.cors.allow-origin=http://localhost:8080   \
+                    -e http.cors.allow-headers=Content-Type,Access-Control-Allow-Headers,Authorization,X-Requested  \
+                    --name platform-napi   172.21.11.63:5000/robert0714/platform-napi:${today}  ";
+              }     
+	
+}  
