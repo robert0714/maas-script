@@ -1,0 +1,11 @@
+node('master'){                       
+        def flow = load '/mnt/sdb/docker_jenkins_data/jenkins_workflow/workflow-docker-ms.groovy';
+	 	flow.mvnDockerBuild("*/develop" , "maas/maas-payment-spgateway-service/pom.xml",false);
+	//	flow.deployMaasApiByDocker("payment","8163","maas-payment-spgateway-service","172.21.11.42");
+	//	flow.deployMaasApiByDocker("payment","8163","maas-payment-spgateway-service","172.21.11.43");
+     	flow.deployMaasApiByDocker("payment","8163","maas-payment-spgateway-service","172.21.11.46");
+    //   flow.deployMaasApiByDocker("payment","8163","maas-payment-spgateway-service","172.21.11.47");
+    //   flow.deployMaasApiByDocker("payment","8163","maas-payment-spgateway-service","172.21.11.48");
+       // flow.deployMaasApiByDocker("payment","8163","maas-payment-spgateway-service","172.21.11.49");
+    }
+	
