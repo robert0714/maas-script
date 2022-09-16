@@ -1,0 +1,73 @@
+trigger:
+  - master
+
+# pool:
+#   vmImage: 'ubuntu-latest'
+pool: 
+  name: 'default'
+  vmImage: 'D210641SVR01'
+variables:
+  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
+  MAVEN_OPTS: "-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)"
+  
+
+steps:
+  - task: Cache@2
+    inputs:
+      key: 'maven | "$(Agent.OS)" | **/pom.xml'
+      restoreKeys: |
+        maven | "$(Agent.OS)"
+        maven
+      path: $(MAVEN_CACHE_FOLDER)
+    displayName: Cache Maven local repo
+
+  # 主機環境設定
+  - task: Bash@3
+    inputs:
+      targetType: "inline"
+      script: |
+        sudo -- sh -c "echo '60.250.171.28    oauth-openshift.apps.ocp.iisi.test' >> /etc/hosts"
+        sudo -- sh -c "echo '60.250.171.28    api.ocp.iisi.test' >> /etc/hosts"
+        sudo -- sh -c "echo '60.250.171.28    sonarqube-sonarqube.apps.ocp.iisi.test' >> /etc/hosts"
+        sudo -- sh -c "echo '60.250.171.28    default-route-openshift-image-registry.apps.ocp.iisi.test' >> /etc/hosts"
+        sudo -- sh -c "echo '{\"insecure-registries\" : [\"default-route-openshift-image-registry.apps.ocp.iisi.test\"]}' > /etc/docker/daemon.json"
+
+        cat /etc/hosts
+        echo '目前路徑'
+        pwd
+         
+        export BUILD_NUMBER=$(Build.BuildNumber)
+        echo 'build 編號  #'${BUILD_NUMBER}
+
+        timedatectl
+        echo 'set timezone to Asia/Taipei'
+        sudo timedatectl set-timezone Asia/Taipei
+        timedatectl
+
+        echo '查看docker daemon'
+        cat /etc/docker/daemon.json
+        sudo systemctl restart docker
+        sudo systemctl daemon-reload
+    displayName: "set env"
+    continueOnError: true  #This code in self-hosted agent  will be 
+    
+  - task: Bash@3
+    inputs:
+      targetType: "inline"
+      script: |
+        
+        echo '查看docker daemon'
+        cat /etc/docker/daemon.json
+        docker ps -a
+        echo ------mysql----------
+        docker exec -i mysql ls
+        echo ------informix----------
+        docker exec -i informix ls
+    displayName: "test docker test"
+    continueOnError: true  #This code in self-hosted agent  will be failure
+
+  - template: template.yml
+    parameters:
+      param: ["T1","T2","T3"]
+  - script: 'echo  test finish'
+

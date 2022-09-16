@@ -1,0 +1,68 @@
+parameters:
+  param: []
+  
+
+
+steps:
+  - ${{ each p in parameters.param }}:
+    - script: 'echo ${{ lower( p ) }}'
+    - task: Maven@3
+      displayName: 'install ${{ p }}'
+      inputs:
+        mavenPomFile: '$(Build.SourcesDirectory)/${{ lower( p ) }}/pom.xml'
+        mavenDirectory: '$(Build.SourcesDirectory)/${{ lower( p ) }}'
+        goals: 'install'
+        options: '-U  --settings settings.xml   '
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '11'
+        mavenVersionOption: 'Default'
+        mavenOptions: '-Xmx3072m  $(MAVEN_OPTS)'
+        mavenAuthenticateFeed: true
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+        checkStyleRunAnalysis: false # replaced by sonarqube
+        pmdRunAnalysis: false  
+        findBugsRunAnalysis: false  
+        javadoc: false
+    - bash: |
+        ls
+        ls $(System.DefaultWorkingDirectory)
+        echo '-----------------------------------------------------'
+        ls ./${{ p }}
+        echo '-----------------------------------------------------'
+        ls $(System.DefaultWorkingDirectory)/${{ p }}
+        echo '-----------------------------------------------------'
+        ls $(System.DefaultWorkingDirectory)/${{ p }}/target
+        echo '-----------------------------------------------------'
+        tree   $(System.DefaultWorkingDirectory)/${{ p }}/target
+        echo '-----------------------------------------------------'
+        
+           if [[ 'T1' == ${{ p }} ]] 
+           then
+                earName='RMW2'
+           elif [[ 'T2' == ${{ p }} ]]
+           then
+                earName='MDW6'
+           elif [[ 'T3' == ${{ p }} ]]
+           then
+                earName='MDW9'
+           else
+                earName='none'     
+           fi 
+           
+           echo ----------$earName---------------
+           echo "##vso[task.setvariable variable=TestData;issecret=false]$earName"
+        
+      displayName: 'inspect ${{ p }} folder structure '
+      continueOnError: true  
+    - bash: |
+        echo ----$(TestData)-----------
+      displayName: 'inspect ${{ p }} folder structure2 '
+      continueOnError: true
+      
+    - bash: |
+        echo "##vso[task.setvariable variable=mySecretVal;issecret=false]ImRobert"
+    - bash: |
+        echo ------$(mySecretVal) ---------- 
