@@ -66,3 +66,14 @@ steps:
         echo "##vso[task.setvariable variable=mySecretVal;issecret=false]ImRobert"
     - bash: |
         echo ------$(mySecretVal) ---------- 
+        
+    - bash: |
+        echo ----${{ lower( p ) }}--- equal t1--------
+      displayName: 'test condition: ${{ lower( p ) }} is eq t1 '
+      condition: eq('${{ lower( p ) }}','t1') 
+      continueOnError: true
+    - bash: |
+        echo ----${{ lower( p ) }}---not equal t1--------
+      displayName: 'test condition: ${{ lower( p ) }} is not eq t1 '
+      condition: ne('${{ lower( p ) }}','t1') 
+      continueOnError: true
